@@ -33,4 +33,10 @@ public class AchadosService {
                 .filter(objeto -> objeto.getId() == id)
                 .findFirst();
     }
+
+    public void listar() {
+        for (var o: repositorio) {
+            System.out.println(o.getId() + " - " + o.getNome());
+        }
+    }
 }

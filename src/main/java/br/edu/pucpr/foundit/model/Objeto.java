@@ -15,7 +15,7 @@ public class Objeto {
     private String local;
     private Status status;
 
-    private void defineId() { id = ID_COUNT++; }
+    private void defineId() { id = ++ID_COUNT; }
     public Objeto(Status status) { defineId(); this.status = status; }
     public Objeto() { defineId(); this.status = Status.DISPONIVEL; }
 }
