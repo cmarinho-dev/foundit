@@ -1,18 +1,15 @@
 package br.edu.pucpr.foundit;
 
+import static br.edu.pucpr.foundit.utils.TerminalOutput.recuperarSaidaTerminal;
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
 
 import br.edu.pucpr.foundit.model.Objeto;
 import br.edu.pucpr.foundit.service.AchadosService;
 
 // Gherkin: src/main/resources/gherkin/f21-listar-objetos.feature
 class ListarObjetosTest {
-    ByteArrayOutputStream output = new ByteArrayOutputStream();
-    PrintStream originalOut = System.out;
 
     @Test
     void deveListarObjetos_quandoExistiremRegistros() {
@@ -41,18 +38,5 @@ class ListarObjetosTest {
 
         // Então
         assertEquals(impressaoEsperada, saida);
-    }
-
-    private String recuperarSaidaTerminal(Runnable acao) {
-        output.reset();
-
-        try (PrintStream captura = new PrintStream(output)) {
-            System.setOut(captura);
-            acao.run();
-        } finally {
-            System.setOut(originalOut);
-        }
-
-        return output.toString().replace("\r\n", "\n");
     }
 }
