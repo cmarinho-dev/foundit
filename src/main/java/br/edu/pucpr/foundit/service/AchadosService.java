@@ -3,6 +3,9 @@ package br.edu.pucpr.foundit.service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
+import java.util.EnumMap;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
@@ -30,6 +33,24 @@ public class AchadosService {
     public Long cadastrar(Objeto objeto) {
         repositorio.add(objeto);
         return objeto.getId();
+    }
+
+    public boolean excluir(Long id) {
+        if (id == null) {
+            return false;
+        }
+        return repositorio.removeIf(objeto -> Objects.equals(objeto.getId(), id));
+    }
+
+    public Map<Status, Long> consultarEstatisticas() {
+        var estatisticas = new EnumMap<Status, Long>(Status.class);
+        for (var status : Status.values()) {
+            long quantidade = repositorio.stream()
+                    .filter(objeto -> objeto.getStatus() == status)
+                    .count();
+            estatisticas.put(status, quantidade);
+        }
+        return estatisticas;
     }
 
     public void atualizar(Long id, Consumer<Objeto> callback) {
