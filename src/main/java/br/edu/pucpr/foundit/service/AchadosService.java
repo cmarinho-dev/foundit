@@ -2,16 +2,19 @@ package br.edu.pucpr.foundit.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.function.Consumer;
+import java.util.function.Predicate;
 
 import br.edu.pucpr.foundit.model.Objeto;
+import br.edu.pucpr.foundit.model.Status;
 
 public class AchadosService {
     private static AchadosService instance;
     private ArrayList<Objeto> repositorio;
 
-    private AchadosService() { this.repositorio = new ArrayList<>(); }
+    public AchadosService() { this.repositorio = new ArrayList<>(); }
 
     public static AchadosService getInstance() {
         if (instance == null) instance = new AchadosService();
@@ -33,6 +36,30 @@ public class AchadosService {
         buscarPeloId(id).ifPresent(objeto -> {
             callback.accept(objeto);
         });
+    }
+
+    public List<Objeto> pesquisarPorNome(String termo) {
+        if (termo == null || termo.isBlank()) {
+            return List.of();
+        }
+        String termoNormalizado = termo.strip().toLowerCase(Locale.ROOT);
+        return selecionarObjetos(objeto -> {
+            String nome = objeto.getNome();
+            return nome != null && nome.toLowerCase(Locale.ROOT).contains(termoNormalizado);
+        });
+    }
+
+    public List<Objeto> filtrarPorStatus(Status status) {
+        if (status == null) {
+            return List.of();
+        }
+        return selecionarObjetos(objeto -> objeto.getStatus() == status);
+    }
+
+    private List<Objeto> selecionarObjetos(Predicate<Objeto> criterio) {
+        return repositorio.stream()
+                .filter(criterio)
+                .toList();
     }
 
     public void listar() {
