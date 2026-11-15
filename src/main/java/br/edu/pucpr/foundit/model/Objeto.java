@@ -6,14 +6,16 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@AllArgsConstructor
 public class Objeto {
+    private static Long ID_COUNT = 0L;
+
     private Long id;
     private String nome;
     private String descricao;
     private String local;
     private Status status;
 
-    public Objeto(Status status) { this.status = status; }
-    public Objeto() { this.status = Status.DISPONIVEL; }
+    private void defineId() { id = ID_COUNT++; }
+    public Objeto(Status status) { defineId(); this.status = status; }
+    public Objeto() { defineId(); this.status = Status.DISPONIVEL; }
 }
