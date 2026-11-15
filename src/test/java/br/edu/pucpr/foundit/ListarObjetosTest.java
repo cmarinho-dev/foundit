@@ -35,7 +35,7 @@ class ListarObjetosTest {
                 1 - Fone
                 2 - Carregador
                 """;
-        
+
         // Quando
         String saida = recuperarSaidaTerminal(service::listar);
 
@@ -53,6 +53,6 @@ class ListarObjetosTest {
             System.setOut(originalOut);
         }
 
-        return output.toString();
-}
+        return output.toString().replace("\r\n", "\n");
+    }
 }

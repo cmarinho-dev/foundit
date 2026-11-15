@@ -16,18 +16,15 @@ public class AchadosService {
         if (instance == null) instance = new AchadosService();
         return instance;
     }
-
     public Long cadastrar(Objeto objeto) {
         repositorio.add(objeto);
         return objeto.getId();
     }
-
     public void atualizar(Long id, Consumer<Objeto> callback) {
         buscarPeloId(id).ifPresent(objeto -> {
             callback.accept(objeto);
         });
     }
-
     public Optional<Objeto> buscarPeloId(Long id) {
         return repositorio.stream()
                 .filter(objeto -> objeto.getId() == id)
@@ -35,8 +32,28 @@ public class AchadosService {
     }
 
     public void listar() {
+        if (repositorio.isEmpty()) {
+            System.out.println("Não há cadastro de objetos!");
+            return;
+        }
+
         for (var o: repositorio) {
             System.out.println(o.getId() + " - " + o.getNome());
         }
+
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
