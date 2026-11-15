@@ -2,7 +2,6 @@ package br.edu.pucpr.foundit;
 
 import br.edu.pucpr.foundit.model.Objeto;
 import br.edu.pucpr.foundit.service.AchadosService;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static br.edu.pucpr.foundit.utils.TerminalOutput.recuperarSaidaTerminal;

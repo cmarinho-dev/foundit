@@ -47,16 +47,17 @@ public class AchadosService {
     }
 
     public void consultar(Long id) {
-        buscarPeloId(id).ifPresent((o) -> {
-            System.out.printf("""
+        var saida = """
                     ID: %d
                     Nome: %s
                     Descrição: %s
                     Local: %s
                     Status: %s
-                    """, o.getId(), o.getNome(),
-                    o.getDescricao(), o.getLocal(),
-                    o.getStatus().name());
+                    """;
+
+        buscarPeloId(id).ifPresent((o) -> {
+            System.out.printf(saida, o.getId(), o.getNome(),
+                    o.getDescricao(), o.getLocal(), o.getStatus().name());
         });
     }
 }
