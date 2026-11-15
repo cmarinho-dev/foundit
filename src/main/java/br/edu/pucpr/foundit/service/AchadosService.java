@@ -12,19 +12,23 @@ public class AchadosService {
     private ArrayList<Objeto> repositorio;
 
     private AchadosService() { this.repositorio = new ArrayList<>(); }
+
     public static AchadosService getInstance() {
         if (instance == null) instance = new AchadosService();
         return instance;
     }
+
     public Long cadastrar(Objeto objeto) {
         repositorio.add(objeto);
         return objeto.getId();
     }
+
     public void atualizar(Long id, Consumer<Objeto> callback) {
         buscarPeloId(id).ifPresent(objeto -> {
             callback.accept(objeto);
         });
     }
+
     public Optional<Objeto> buscarPeloId(Long id) {
         return repositorio.stream()
                 .filter(objeto -> objeto.getId() == id)
